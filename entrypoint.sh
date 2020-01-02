@@ -39,7 +39,7 @@ if [ -z $CB_TWEET_TARGET_BUCKET ];then
 fi
 
 
-# mv /couchmovies/src/main/resources/application.properties /couchmovies/src/main/resources/application.properties.bkup
+mv /couchmovies/src/main/resources/application.properties /couchmovies/src/main/resources/application.properties.bkup
 echo "spring.couchbase.bootstrap-hosts=${CB_SERVER}" > $DEMO_DIR/src/main/resources/application.properties
 echo "spring.couchbase.bucket.name=${CB_MOVIE_BUCKET}" >> $DEMO_DIR/src/main/resources/application.properties
 echo "spring.couchbase.bucket.user=${CB_MOVIE_BUCKET}" >> $DEMO_DIR/src/main/resources/application.properties
@@ -55,4 +55,4 @@ cd /opt/couchmovies/movieservice
 mvn spring-boot:run
 
 #Not ending process for container to run
-tail -f /dev/null
+#tail -f /dev/null
