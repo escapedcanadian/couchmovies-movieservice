@@ -1,16 +1,13 @@
-#Couchmovies Application Server
-# Inheriting a Couchbase image ensures that the CB binaries are present. These are used to populate the data.
-FROM couchbase:latest
+#Couchmovies Movieservice Container
+FROM maven:3.6.3-jdk-8-openj9
 MAINTAINER david.brown@couchbase.com
 
-RUN apt-get update --fix-missing
-# RUN sudo apt-get -y install git zip unzip jq maven vim openjdk-8-jdk python chromium-chromedriver
-RUN apt-get -y install git zip unzip jq maven vim openjdk-8-jdk python 
+RUN apt-get -y install git
 
-RUN git clone https://github.com/escapedcanadian/couchmovies.git /opt/couchmovies
+RUN git clone https://github.com/escapedcanadian/couchmovies-movieservice /opt/couchmovies/movieservice
+WORKDIR /opt/couchmovies/movieservice
 
-
-RUN /opt/couchmovies/build/buildServer
+RUN mvn install -DskipTests
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
