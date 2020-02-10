@@ -16,7 +16,9 @@ if [ -z $CB_SERVER ];then
 	export CB_SERVER=couchbase
 fi
 
-export CB_ENGINE=couchbase://$CB_SERVER
+if [ -z $CB_SERVER_PORT ];then
+	export CB_SERVER_PORT=8090
+fi
 
 if [ -z $CB_USER ];then
 	export CB_USER=Administrator
@@ -38,9 +40,11 @@ if [ -z $CB_TWEET_TARGET_BUCKET ];then
 	export CB_TWEET_TARGET_BUCKET=tweettarget
 fi
 
+export CB_ENGINE=http://$CB_SERVER:$CB_SERVER_PORT
+
 
 mv /couchmovies/src/main/resources/application.properties /couchmovies/src/main/resources/application.properties.bkup
-echo "spring.couchbase.bootstrap-hosts=${CB_SERVER}" > $DEMO_DIR/src/main/resources/application.properties
+echo "spring.couchbase.bootstrap-hosts=${CB_ENGINE}" > $DEMO_DIR/src/main/resources/application.properties
 echo "spring.couchbase.bucket.name=${CB_MOVIE_BUCKET}" >> $DEMO_DIR/src/main/resources/application.properties
 echo "spring.couchbase.bucket.user=${CB_MOVIE_BUCKET}" >> $DEMO_DIR/src/main/resources/application.properties
 echo "spring.couchbase.bucket.password=password" >> $DEMO_DIR/src/main/resources/application.properties
